@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Mihi Bubbles Muffin 💘</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    overflow-x: hidden;
+  }
+
+  .card {
+    position: relative;
+    z-index: 10;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 420px;
+    margin: 40px auto;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    animation: pop 0.6s ease;
+  }
+
+  h1 { font-size: 26px; }
+  p { font-size: 16px; }
+
+  button {
+    padding: 12px 22px;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  button:hover { transform: scale(1.1); }
+
+  .yes { background: #ff4d6d; color: white; }
+  .no { background: #ccc; }
+
+  .hidden { display: none; }
+
+  .coupon {
+    background: #ffe6eb;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    border: 2px solid transparent;
+  }
+
+  .coupon.selected {
+    background: #ff4d6d;
+    color: white;
+    border-color: #c9184a;
+  }
+
+  /* FLOATING HEARTS */
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.7;
+    z-index: 1;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+  }
+
+  /* CONFETTI */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    animation: fall 3s linear forwards;
+    z-index: 2;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* PHOTO */
+  .gallery img {
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<iframe
+  width="0"
+  height="0"
+  src="https://www.youtube.com/embed/0fKpPZC4a2c?autoplay=1&loop=1&playlist=0fKpPZC4a2c"
+  frameborder="0"
+  allow="autoplay">
+</iframe>
+
+<!-- QUESTION -->
+<div class="card" id="question">
+  <h1>💘 MIHI BUBBLES MUFFIN 💘</h1>
+  <p>Will You Be My Valentine? 🥹</p>
+  <button class="yes" onclick="yesClicked()">YES 😍</button>
+  <button class="no" onclick="noClicked()">NO 🙄</button>
+</div>
+
+<!-- NO -->
+<div class="card hidden" id="noScreen">
+  <h1>😤 I KNOW UR TUKKKIKAAAAAAA BRAINN</h1>
+  <p>Wanted to press YESSSS…<br>SOOO GO BACK 💗</p>
+  <button class="yes" onclick="goBack()">OKAY OKAY 😭</button>
+</div>
+
+<!-- YES -->
+<div class="card hidden" id="yesScreen">
+  <h1>🎉 OMGGGGG YESSSS MIHI 🎉</h1>
+  <p>LET’S CELEBRATE THIS ON THE <b>16TH</b> 🥹💘</p>
+
+  <h3>Pick ANY 2 coupons 👀👇</h3>
+  <div class="coupon" onclick="toggleCoupon(this)">🎬 Movie</div>
+  <div class="coupon" onclick="toggleCoupon(this)">🏎️ Go Karting</div>
+  <div class="coupon" onclick="toggleCoupon(this)">🍕 Crazy Food</div>
+  <div class="coupon" onclick="toggleCoupon(this)">💃 Pam Pam</div>
+
+  <button class="yes" onclick="confirmCoupons()">CONFIRMMMM 💞</button>
+
+  <h3>Us being cute 👉👈</h3>
+  <div class="gallery">
+    <img src="images/IMG-20251125-WA1377.jpg" alt="Us 💖">
+  </div>
+</div>
+
+<script>
+let selectedCount = 0;
+
+/* HEARTS */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}, 400);
+
+/* CONFETTI */
+function confettiBlast() {
+  for (let i = 0; i < 80; i++) {
+    const conf = document.createElement("div");
+    conf.className = "confetti";
+    conf.style.left = Math.random() * 100 + "vw";
+    conf.style.background = `hsl(${Math.random()*360},100%,60%)`;
+    conf.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(conf);
+    setTimeout(() => conf.remove(), 4000);
+  }
+}
+
+/* BUTTON LOGIC */
+function yesClicked() {
+  document.getElementById('question').classList.add('hidden');
+  document.getElementById('yesScreen').classList.remove('hidden');
+  confettiBlast();
+}
+
+function noClicked() {
+  document.getElementById('question').classList.add('hidden');
+  document.getElementById('noScreen').classList.remove('hidden');
+}
+
+function goBack() {
+  document.getElementById('noScreen').classList.add('hidden');
+  document.getElementById('question').classList.remove('hidden');
+}
+
+function toggleCoupon(el) {
+  if (!el.classList.contains('selected') && selectedCount >= 2) {
+    alert("ONLY TWO 😤💘");
+    return;
+  }
+  el.classList.toggle('selected');
+  selectedCount = document.querySelectorAll('.coupon.selected').length;
+}
+
+function confirmCoupons() {
+  if (selectedCount < 2) {
+    alert("Pick TWO first cutie 🥺💗");
+  } else {
+    alert("DATE LOCKED 🔒💞 SEE YOU ON THE 16TH MIHI 😘");
+  }
+}
+</script>
+
+</body>
+</html>
