@@ -108,9 +108,10 @@
 
 <!-- MUSIC -->
 <iframe
+  id="music"
   width="0"
   height="0"
-  src="https://www.youtube.com/embed/0fKpPZC4a2c?autoplay=1&loop=1&playlist=0fKpPZC4a2c"
+  src="https://www.youtube.com/embed/0fKpPZC4a2c?enablejsapi=1&loop=1&playlist=0fKpPZC4a2c"
   frameborder="0"
   allow="autoplay">
 </iframe>
@@ -180,7 +181,11 @@ function yesClicked() {
   document.getElementById('question').classList.add('hidden');
   document.getElementById('yesScreen').classList.remove('hidden');
   confettiBlast();
-}
+
+  // start music after user interaction
+  const music = document.getElementById("music");
+  music.src += "&autoplay=1";
+      }
 
 function noClicked() {
   document.getElementById('question').classList.add('hidden');
